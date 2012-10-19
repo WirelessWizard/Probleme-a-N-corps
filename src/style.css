@@ -1,0 +1,170 @@
+body
+{
+	background: #123;	
+}
+#output, #control_panel, html, body
+{
+	margin:0;
+	padding:0;
+	/*color: #ff0;*/
+	color: white;
+	font-family: "Courier new";
+}
+#output, #control_panel
+{
+	/*border: 1px solid black;*/
+	position: absolute;
+	display: block;
+	top: 0;
+}
+#header
+{
+	text-align: center;
+	font: bold 30pt Arial;	
+}
+canvas#output
+{
+	position: absolute;
+	right: 0;
+	background: #000;
+	z-index: 0;
+	
+}
+#scale_value
+{
+	position: absolute;
+	right: 12pt;
+	bottom: 12pt;
+	width: 70pt;
+	height: 12pt;	
+	background: transparent;
+}
+.object_id_block
+{
+	position: absolute;
+	background: transparent;
+}
+#control_panel
+{
+	width: auto;
+	padding: 2pt;
+	background-color: rgba(127, 127, 127, 0.5);
+	z-index: 10;
+}
+#activity_monitor
+{
+	/*
+	display: none;
+	*/
+}
+label
+{
+	display: inline-block;
+	width: 100%;
+	margin: 1pt 0 1pt 0;
+	padding: 0;
+
+/*span.label_wrapper*/
+
+	/*width: 128pt;*/
+	/*margin: 0;*/
+	padding: 0 2pt 0 0;
+	text-align: right;
+	/*background: red;*/
+}
+input.digit, input.radio
+{
+	display: inline-block;
+	width: 50pt;
+	margin: 0 0 0 2pt;
+	background-color: rgba(100, 100, 100, 0.7);
+	color: #0f0;
+}
+input.submit
+{
+	width: 50pt;
+	font: bold 84% 'trebuchet ms',helvetica,sans-serif; 
+	background-color: rgba(20, 20, 70, 0.3); 
+	color: #7f0;
+	/*
+	border: 1px solid; 
+	border-color: #696 #363 #363 #696;*/
+}
+/*
+input#stop_btn[disabled="true"]
+{
+	color: #aaa;	
+}
+input#stop_btn[disabled="false"]
+{
+	color: #f00;	
+}
+input#start_btn[disabled="true"]
+{
+	//color: #aaa;
+}
+*/
+output
+{
+	display: inline-block;
+	width: 50pt;
+	text-align: left;
+	color: #0f0;
+}
+fieldset
+{
+	margin-top: 6pt;
+	width: 190pt;
+}
+legend
+{
+	border: 1px solid; 
+	border-color: white gray gray white;
+	border-width: 1.5pt;
+	background-color: rgba(127, 127, 127, 0.5);
+	color: yellow;
+}
+.labelframe
+{
+	/*border: 0;*/
+	width: auto;
+}
+.labelframe legend
+{
+	border: 0;
+	background: transparent;
+	color: white;
+	width: 100%;
+}
+.optional
+{
+	/*position: absolute;*/
+	display: inline-block;
+}
+#navigation_panel
+{
+	position: absolute;
+	top: 0pt;
+	right: 0pt;
+	width: 18pt;
+	height: auto;
+	padding: 0;
+	margin: 0pt 0pt 0 0;
+	border: 0;
+	z-index: 2;
+	background: transparent;
+}
+#navigation_panel input.submit
+{
+	display: block;
+	width: 18pt;
+	height: 18pt;
+	padding: 0;
+	margin: 0;
+	font-size: 7pt;
+	font-family: "Courier New";
+}
+.meta_tools
+{
+	display: none;	
+}
