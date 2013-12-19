@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>The Problem of N Objects</title>
+<!-- by Arshavir Ter-Gabrielyan. Specially for the MIPT's Intel Lab, late 2010 -->
+<!-- last update: may 2011 -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--link rel="stylesheet" href="style.css" media="all"-->
+<script type="text/javascript" src="vector.js"></script>
+<script type="text/javascript" src="model.js"></script>
+<script type="text/javascript" src="view.js"></script>
+<script type="text/javascript" src="benchmark.js"></script>
+<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript">
+var AUTO_INPUT = {
+'TEST_TIME' : 40, //sec
+'gamma' : 11,
+'object_number' : 100,
+'forbidden_radius' : 0.5,
+'time_increment' : 0.001,
+'average_mass' : 0.005,
+'mass_disposal' : 10001,
+'mass_deviation' : 0.5,
+'coord_scale_coeff' : 10,
+'time_step_rate' : 25,
+'draw_rate': 1
+};
+function getData(benchmark)
+{
+	window.location.href = 'run_tests_file.php?test_result=' + benchmark + '&test_num=2';
+}
+</script>
+</head>
+<body onresize="resize_canvas()" onload="startup()">
+<div id="control_panel">
+<form name="main" action="#">
+<div id="header"></div>
+<fieldset class="hand_control"><legend>Control Panel</legend>
+<input type="button" id="start_btn" class="submit preset" onclick="_start()" value="Start">
+<input type="button" id="stop_btn" class="submit" onclick="_terminate()" value="Stop">
+</fieldset>
+<fieldset><legend>Modeling Parameters</legend>
+<label>Gamma member<input class="digit preset" id="gamma" value="10" /></label>
+<label>Number of objects<input class="digit preset" id="object_number" value="60" /></label>
+<label>Forbidden radius<input class="digit preset" id="forbidden_radius" value="0.5" /></label>
+<label>Time increment<input class="digit preset" id="time_increment" value="0.001" /></label>
+<label>Average mass<input class="digit preset" id="average_mass" value="0.005" /></label>
+<label>Mass disposal,%<input class="digit preset" id="mass_disposal" value="10000" /></label>
+<label>Mass deviation<input class="digit preset" id="mass_deviation" value="0.5" /></label>
+<label>Initial scale,x<input class="digit preset" id="coord_scale_coeff" value="10" /></label>
+<!--label>System energy<input id="average_mass"></label-->
+</fieldset>
+<fieldset><legend>Visualization Parameters</legend>
+<label>Time step rate,ms<input class="digit preset" id="time_step_rate" value="50" /></label>
+<label>Drawing rate<input class="digit preset" id="draw_rate" value="1" /></label>
+<!--label>Display objects' ID<input class="flag" type="checkbox" id="display_id_flag" /></label-->
+<label>Draw velosity vectors<input class="flag" type="checkbox" id="draw_arrows_flag" onchange="switch_arrows_draw()" checked /></label>
+<label>Auto scaling<input class="flag" type="checkbox" id="auto_scale_flag" onchange="switch_auto_scale()" checked /></label>
+</fieldset>
+<fieldset><legend>Distribution Policy</legend>
+<label>Equal distribution<input class="flag preset" type="radio" name="distr" value="random" checked /></label>
+<label>Circular<input class="flag preset" type="radio" name="distr" value="circle" /></label>
+<label>Solar System<input class="flag preset" type="radio" name="distr" value="solar" /></label>
+<!--label>Use preset<input class="flag preset" type="radio" name="distr" value="preset" /></label-->
+</fieldset>
+<fieldset id="activity_monitor"><legend>Activity Monitor</legend>
+<label>Experimental Time:<output id="timer"></output></label>
+<label>Performance:<output id="fps"></output></label>
+<label>Time Lag:<output id="time_lag"></output></label>
+<label>Objects alive:<output id="status"></output></label>
+</fieldset>
+</form>
+</div>
+<div id="navigation_panel" class="hand_control">
+<input type="button" id="in_scale_btn" class="submit real_time" onclick="_in_scale()" value="+">
+<input type="button" id="out_scalee_btn" class="submit real_time" onclick="_out_scale()" value="-">
+<input type="button" id="fit_scalee_btn" class="submit real_time" onclick="_fit_scale()" value="fit">
+<input type="button" id="normal_scalee_btn" class="submit real_time" onclick="_normal_scale()" value="1:1">
+<input type="button" id="go_up" class="submit real_time" onclick="_go_up()" value="^">
+<input type="button" id="go_right" class="submit real_time" onclick="_go_right()" value=">">
+<input type="button" id="go_down" class="submit real_time" onclick="_go_down()" value="v">
+<input type="button" id="go_left" class="submit real_time" onclick="_go_left()" value="<">
+<input type="button" id="help" class="submit real_time" onclick="alert('The Model of N Bodies\nby Arsh Ter-Gabrielyan\nwwwizzz@@gmail.com\nIntel iLab & MIPT 2011')" value="?">
+</div>
+<canvas id="output" style="background: black;">Your browser doesn't support HTML5 Canvas</canvas>
+<span id="scale_value">1:1</span>
+<div class="meta_tools">
+<!-- Yandex.Metrika informer -->
+<a href="http://metrika.yandex.ru/stat/?id=5931343&amp;from=informer"
+target="_blank" rel="nofollow"><img src="//bs.yandex.ru/informer/5931343/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
+style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" /></a>
+<!-- /Yandex.Metrika informer -->
+<!-- Yandex.Metrika counter -->
+<div style="display:none;"><script type="text/javascript">
+(function(w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter5931343 = new Ya.Metrika(5931343);
+             yaCounter5931343.clickmap(true);
+             yaCounter5931343.trackLinks(true);
+        } catch(e) { }
+    });
+})(window, 'yandex_metrika_callbacks');
+</script></div>
+<script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script>
+<noscript><div><img src="//mc.yandex.ru/watch/5931343" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<!--a href="http://jigsaw.w3.org/css-validator/check/referer"><img style="border:0;width:88px;height:31px;" src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!" /></a-->
+</div>
+</body>
+</html>
